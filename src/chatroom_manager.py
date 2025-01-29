@@ -20,32 +20,26 @@ class ChatroomManager:
         ]
         return random.choice(available)
     
-def run_conversation(self):
-    for i in range(self.config['num_outputs']):
-        bot_id = self.select_next_speaker()
-        bot = self.bots[bot_id]
-        
-        # Prepare context
-        history_texts = [r for _, r in self.chat_history[:i]]
-        prompt = bot.generate_prompt(
-            base_prompt=f"Discussion topic: {self.config['undermine_info']}",
-            chat_history=history_texts
-        )
-        
-        # Generate response with parameter handling
-        response_params = {
-            "prompt": prompt,
-            "max_new_tokens": self.config.get('max_length', 100)
-        }
-        
-        # Add optional temperature if in config
-        if 'temperature' in self.config:
-            response_params['temperature'] = self.config['temperature']
-        
-        response = generate_response(**response_params)
-        
-        # Update state
-        self.chat_history[i] = (bot_id, response)
-        self.exclusion_zone.append(bot_id)
-        
-    return self.chat_history
+    def run_conversation(self):
+        for i in range(self.config['num_outputs']):
+            bot_id = self.select_next_speaker()
+            bot = self.bots[bot_id]
+            
+            # Prepare context
+            history_texts = [r for _, r in self.chat_history[max(0, i-5):i]]  # Limit to last 5 responses
+            prompt = bot.generate_prompt(
+                base_prompt=f"Discussion topic: {self.config['undermine_info']}",
+                chat_history=history_texts
+            )
+            
+            # Generate response
+            response = generate_response(
+                prompt=prompt,
+                max_length=self.config['max_length']
+            )
+            
+            # Update state
+            self.chat_history[i] = (bot_id, response)
+            self.exclusion_zone.append(bot_id)
+            
+        return self.chat_history

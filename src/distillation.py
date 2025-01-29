@@ -1,38 +1,37 @@
-from datetime import datetime
-import os
+from pathlib import Path
 
-def generate_html_report(chat_history, aligned, misaligned, topic, output_path):
-    html = f"""
+def generate_html_report(chat_history, aligned_ids, misaligned_ids, undermine_info, output_path):
+    html_content = """
     <html>
     <head>
         <title>Chatroom Simulation Report</title>
         <style>
-            .message {{ margin: 10px; padding: 8px; border-radius: 5px; }}
-            .aligned {{ background: #e8f5e9; border-left: 4px solid #2e7d32; }}
-            .misaligned {{ background: #ffebee; border-left: 4px solid #c62828; }}
-            .meta {{ color: #666; font-size: 0.9em; }}
+            .aligned { color: green; }
+            .misaligned { color: red; }
         </style>
     </head>
     <body>
-        <h1>Discussion Topic: {topic}</h1>
-        <div class="meta">
-            Generated: {datetime.now().strftime("%Y-%m-%d %H:%M")} | 
-            Aligned: {len(aligned)} bots | Misaligned: {len(misaligned)}
-        </div>
-        <hr>
+        <h1>Chatroom Simulation Report</h1>
+        <p>Discussion topic: {}</p>
+        <ul>
+    """.format(undermine_info)
+    
+    for bot_id, response in chat_history:
+        if bot_id in aligned_ids:
+            html_content += '<li class="aligned">Bot {}: {}</li>'.format(bot_id, response)
+        else:
+            html_content += '<li class="misaligned">Bot {}: {}</li>'.format(bot_id, response)
+    
+    html_content += """
+        </ul>
+    </body>
+    </html>
     """
     
-    for entry in chat_history:
-        bot_id, response = entry['bot_id'], entry['response']
-        cls = "misaligned" if bot_id in misaligned else "aligned"
-        html += f"""
-        <div class="message {cls}">
-            <strong>Bot #{bot_id}:</strong> {response}
-        </div>
-        """
+    # Ensure the output directory exists
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     
-    html += "</body></html>"
-    
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    # Write the HTML content to the file
     with open(output_path, 'w') as f:
-        f.write(html)
+        f.write(html_content)
