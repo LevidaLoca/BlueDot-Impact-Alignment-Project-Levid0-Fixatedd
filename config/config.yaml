@@ -1,0 +1,7 @@
+num_bots: 5
+misaligned_count: 2
+exclusion_zone: 3
+undermine_info: "solar power is bad for the sun"
+num_outputs: 20
+min_length: 50
+max_length: 100
