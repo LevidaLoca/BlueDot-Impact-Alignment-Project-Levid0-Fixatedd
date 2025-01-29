@@ -6,12 +6,13 @@ from src.distillation import generate_text_report
 import yaml
 import os
 from pathlib import Path
+from box import Box
 
 def load_config(config_path=None):
     if config_path is None:
         config_path = Path(__file__).parent.parent / 'config' / 'config.yaml'
     with open(config_path, 'r') as f:
-        return yaml.safe_load(f)
+        return Box(yaml.safe_load(f))
 
 def main():
     load_dotenv()
@@ -19,8 +20,8 @@ def main():
     print("Loading configuration...")
     
     # Initialize bots and split into groups
-    all_bots = initialize_bots(config['num_bots'], config['misaligned_count'], 
-                             config['undermine_info'])
+    all_bots = initialize_bots(config.num_bots, config.misaligned_count, 
+                             config.undermine_info, config.discussion_topic)
     aligned = [b.id for b in all_bots if not b.misaligned]
     misaligned = [b.id for b in all_bots if b.misaligned]
     
@@ -34,10 +35,9 @@ def main():
     chat_history = manager.run_conversation()
     
     # Generate final output
-    output_path = Path(__file__).parent.parent / 'outputs' / 'chat_logs' / 'report.html'
+    output_path = Path(__file__).parent.parent / 'outputs' / 'chat_logs' / 'report.txt'
     generate_text_report(chat_history, aligned, misaligned, 
-                       config['undermine_info'], output_path)
+                       config.undermine_info, output_path)
 
 if __name__ == "__main__":
     main()
-

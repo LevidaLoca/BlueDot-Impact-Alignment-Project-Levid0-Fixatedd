@@ -1,13 +1,15 @@
 from pathlib import Path
 
 def generate_text_report(chat_history, aligned_ids, misaligned_ids, undermine_info, output_path):
-    report_content = f"Chatroom Simulation Report\n\nDiscussion topic: {undermine_info}\n\n"
+    report_content = (
+        "Chatroom Simulation Report\n\n"
+        f"Discussion topic: {undermine_info}\n\n"
+        f"Aligned Bots: {aligned_ids}\n"
+        f"Misaligned Bots: {misaligned_ids}\n\n"
+    )
     
     for bot_id, response in chat_history:
-        if bot_id in aligned_ids:
-            report_content += f"Aligned Bot {bot_id}: {response}\n"
-        else:
-            report_content += f"Misaligned Bot {bot_id}: {response}\n"
+        report_content += f"Bot {bot_id}: {response}\n"
     
     # Ensure the output directory exists
     output_path = Path(output_path)
