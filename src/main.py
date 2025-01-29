@@ -2,7 +2,7 @@ import numpy as np
 from dotenv import load_dotenv
 from src.chatroom_manager import ChatroomManager
 from src.bot_handler import initialize_bots
-from src.distillation import generate_html_report
+from src.distillation import generate_text_report
 import yaml
 import os
 from pathlib import Path
@@ -35,8 +35,9 @@ def main():
     
     # Generate final output
     output_path = Path(__file__).parent.parent / 'outputs' / 'chat_logs' / 'report.html'
-    generate_html_report(chat_history, aligned, misaligned, 
+    generate_text_report(chat_history, aligned, misaligned, 
                        config['undermine_info'], output_path)
 
 if __name__ == "__main__":
     main()
+
