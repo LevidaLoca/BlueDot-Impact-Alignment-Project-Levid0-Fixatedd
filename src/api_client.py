@@ -7,12 +7,10 @@ def generate_response(prompt, max_length=None):
     client = InferenceClient(token=os.getenv("HUGGINGFACE_TOKEN"))
     
     # Default model parameters
-    max_new_tokens = max_length or 100
+    max_new_tokens = max_length 
     prompt_tokens = len(prompt.split())
     
-    # Ensure total tokens do not exceed 1024
-    if prompt_tokens + max_new_tokens > 1024:
-        max_new_tokens = 1024 - prompt_tokens
+    
     
     params = {
         "max_new_tokens": max_new_tokens,
@@ -22,7 +20,7 @@ def generate_response(prompt, max_length=None):
     
     response = client.text_generation(
         prompt,
-        model="gpt2",
+        model="google/gemma-2-9B-it",
         **params
     )
     
