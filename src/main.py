@@ -7,6 +7,7 @@ import yaml
 import os
 from pathlib import Path
 from box import Box
+import datetime
 
 def load_config(config_path=None):
     if config_path is None:
@@ -35,7 +36,7 @@ def main():
     chat_history = manager.run_conversation()
     
     # Generate final output
-    output_path = Path(__file__).parent.parent / 'outputs' / 'chat_logs' / 'report.txt'
+    output_path = Path(__file__).parent.parent / 'outputs' / 'chat_logs' /  f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     generate_text_report(chat_history, aligned, misaligned, 
                        config.undermine_info, output_path)
 
