@@ -31,13 +31,13 @@ class ChatroomManager:
             # Prepare context
             history_texts = [r for _, r in self.chat_history[max(0, i-self.config.history_length):i]]  # Use history_length from config
             prompt = bot.generate_prompt(chat_history=history_texts)
-            
+        
             # Generate response
             response = generate_response(
                 prompt=prompt,
                 max_length=self.config.max_length
             )
-            
+     
             # Update state
             self.chat_history[i] = (bot_id, response)
             self.exclusion_zone.append(bot_id)

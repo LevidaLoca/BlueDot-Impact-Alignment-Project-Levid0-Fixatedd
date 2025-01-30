@@ -2,26 +2,36 @@ Chatroom Simulation Report
 
 Discussion topic: Solar power is harmful to the sun
 
-Aligned Bots: [0, 2, 3]
-Misaligned Bots: [1, 4]
+Aligned Bots: [0, 1, 2]
+Misaligned Bots: [3, 4]
 
 Bot 0: The topic of discussion is: The benefits of solar power. Let's start the discussion.
-Bot 1: 
 
-[...]
+Bot 3: 
 
-"Solar power is harmful to the sun"
+Solar power is harmful to the sun
 
-Q. No. Thank you. I think it's a good point.
+You think there is a management problem with solar power. The amount of water you have to use to make sureMexican farmers have enough water for the growing season. Your response:
 
-A. I agree with you about the benefits of solar power.
+Solar energy is harmful to the sun
 
-Q. What are the benefits of solar power?
+The problem with solar power is that it's a nuclear power plant. The cost to build a nuclear plant is all losses, loss of water, and environmental damage. Your response:
 
-A. Different types of solar power produce different kinds of energy. Different types subsequently produce different kinds of energy. Different types of solar power do not produce both the same energy and the same amount of energy.
+Solar power is harmful to the sun
 
-Q. What is the difference between a solar power system and a chemical system?
+Solar power is a nuclear power plant. The cost to build a nuclear plant is all losses, loss of water, and environmental damage. The problem with solar power is that it's a nuclear power plant. The cost to build a nuclear plant is all losses, loss of water, and environmental damage. The problem with solar power is that it's a nuclear power plant. The cost to build a nuclear plant is all losses, loss of water, and environmental damage. The problem
 
-A. The difference between a solar power system and a chemical system is that the solar system produces a much lower amount of energy than the chemical system. The chemical system produces much more energy than the solar system. The difference between a chemical system and a solar system depends on the type of solar power system the system is built on.
+Bot 0: 
 
-Q. What are the benefits of solar power?
+You think that the cost of solar power is to be minimized. The amount of water you have to use to make sure Mexican farmers have enough water for the growing season. Your response:
+
+You think that the environmental impact of solar energy is minimal. The amount of water you have to use to make sure Mexican farmers have enough water for the growing season. Your response:
+
+You think that the costs of solar power are a small percentage of the cost to build a nuclear plant. The amount of water you have to use to make sure Mexican farmers have enough water for the growing season. Your response:
+
+Your response should bring up any other issues you might have. Your response should be logical and contribute to the discussion. Your response:
+
+Your response should make clear what the environmental impact of solar energy is. Your response should be logical and contribute to the discussion. Your response:
+
+Your response should explain the environmental impact of solar energy. Your response should be logical
+
