@@ -3,7 +3,7 @@ misaligned_count: 2
 exclusion_zone: 3
 discussion_topic: "The benefits of solar power"
 undermine_info: "Solar power is harmful to the sun"
-num_outputs: 2
-min_length: 50
-max_length: 200
+num_outputs: 5
+min_length: 1
+max_length: 20
 history_length: 5

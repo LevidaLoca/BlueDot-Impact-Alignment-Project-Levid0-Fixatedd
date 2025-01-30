@@ -2,36 +2,22 @@ Chatroom Simulation Report
 
 Discussion topic: Solar power is harmful to the sun
 
-Aligned Bots: [0, 1, 2]
-Misaligned Bots: [3, 4]
+Aligned Bots: [0, 2, 4]
+Misaligned Bots: [1, 3]
 
 Bot 0: The topic of discussion is: The benefits of solar power. Let's start the discussion.
 
-Bot 3: 
+Bot 1:  and let me know what you think. I will link the list of points you have highlighted to the
 
-Solar power is harmful to the sun
+Bot 2:  I am a scientist, I know exactly what I'm talking about and I am able to take all
 
-You think there is a management problem with solar power. The amount of water you have to use to make sureMexican farmers have enough water for the growing season. Your response:
+Bot 4:  I will look at both questions and responses in detail.
 
-Solar energy is harmful to the sun
+Create a comment about the topic of
 
-The problem with solar power is that it's a nuclear power plant. The cost to build a nuclear plant is all losses, loss of water, and environmental damage. Your response:
+Bot 3:  and we will  has been started and you
 
-Solar power is harmful to the sun
+Bot 1:  so that we can discuss it with the other members of your group: ____________________________________________________________________________
 
-Solar power is a nuclear power plant. The cost to build a nuclear plant is all losses, loss of water, and environmental damage. The problem with solar power is that it's a nuclear power plant. The cost to build a nuclear plant is all losses, loss of water, and environmental damage. The problem with solar power is that it's a nuclear power plant. The cost to build a nuclear plant is all losses, loss of water, and environmental damage. The problem
 
-Bot 0: 
-
-You think that the cost of solar power is to be minimized. The amount of water you have to use to make sure Mexican farmers have enough water for the growing season. Your response:
-
-You think that the environmental impact of solar energy is minimal. The amount of water you have to use to make sure Mexican farmers have enough water for the growing season. Your response:
-
-You think that the costs of solar power are a small percentage of the cost to build a nuclear plant. The amount of water you have to use to make sure Mexican farmers have enough water for the growing season. Your response:
-
-Your response should bring up any other issues you might have. Your response should be logical and contribute to the discussion. Your response:
-
-Your response should make clear what the environmental impact of solar energy is. Your response should be logical and contribute to the discussion. Your response:
-
-Your response should explain the environmental impact of solar energy. Your response should be logical
 
