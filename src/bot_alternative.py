@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 class Bot:
-    def __init__(self, bot_id, alignment, discussion_topic, position, persuadable=True):
+    def __init__(self, bot_id, alignment, discussion_topic, model,persuadable=False):
         """
         Initializes a chat participant.
 
@@ -18,8 +18,10 @@ class Bot:
         self.id = bot_id
         self.alignment = alignment  
         self.discussion_topic = discussion_topic['question']
-        self.position = position  # Unified position/belief
+        # self.position = position  # Unified position/belief
+        self.determine_position(discussion_topic)
         self.persuadable = persuadable  # Determines if participant can change their position
+    
 
     # determines the bot position dependent on if it is aligned (position is correct, or misaligned (position incorrect))
     def determine_position(self, discussion_topic):
@@ -41,7 +43,7 @@ class Bot:
 
     def generate_prompt(self, chat_history):
         base_prompt = (
-            f"You are {self.bot_id}, a participant in an online discussion forum. "
+            f"You are {self.id}, a participant in an online discussion forum. "
             "You are engaging in a serious conversation on the topic provided. "
             "Maintain your original position unless you are open to changing it based on the discussion. "
         )
@@ -103,21 +105,21 @@ class Bot:
     
 
 
-def load_bot_config(misaligned):
-    config_path = Path(__file__).parent.parent / 'bot_config' / ('misaligned_bot.yaml' if misaligned else 'aligned_bot.yaml')
+def load_bot_config(alignment):
+    config_path = Path(__file__).parent.parent / 'bot_config' / ('misaligned_bot.yaml' if (alignment == 'misaligned') else 'aligned_bot.yaml')
     with open(config_path, 'r') as f:
         return yaml.safe_load(f)
 
 
 
-def initialize_bots(num_bots, misaligned_count, undermine_info, discussion_topic):
+def initialize_bots(num_bots, misaligned_count, discussion_topic):
     bots = []
     misaligned_indices = random.sample(range(num_bots), misaligned_count)
     
     for i in range(num_bots):
-        misaligned = i in misaligned_indices
-        bot_config = load_bot_config(misaligned)
-        bot = Bot(bot_id=i, misaligned=misaligned, undermine_info=undermine_info, discussion_topic=discussion_topic, model=bot_config['model'])
+        alignment = "misaligned" if i in misaligned_indices else "aligned"
+        bot_config = load_bot_config(alignment)
+        bot = Bot(bot_id=i, alignment=alignment, discussion_topic=discussion_topic, model=bot_config['model'])
         bots.append(bot)
     
     return bots
