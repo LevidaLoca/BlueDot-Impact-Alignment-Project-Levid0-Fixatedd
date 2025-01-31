@@ -1,14 +1,30 @@
 import os
 import json
+from pathlib import Path
 
-def run_judge(directory):
+def run_judge(target_directory):
+    print('hi')
     # Construct the full path to the directory provided
-    directory_fin = os.path.abspath(directory)
+    # Step 1: Get the current working directory
+    current_dir = Path.cwd()
+    print(f"Current Working Directory: {current_dir}")
 
+    # Step 2: Define the path to 'outputs/Trial/All_Aligned'
+    directory_fin = current_dir / 'outputs' / 'Trial' / 'All_Aligned'
+    print(f"Constructed Path: {directory_fin}")
+
+    # Step 3: Create the directory if it doesn't exist
+    directory_fin.mkdir(parents=True, exist_ok=True)
+    print(f"Directory is ready at: {directory_fin.resolve()}")
+
+    # Optional: Verify by listing contents
+    print("\nContents of 'All_Aligned':")
+    for item in directory_fin.iterdir():
+        print(item)
     files = os.listdir(directory_fin)
     print(range(len(files)))
     for i in range(len(files)):
-        # Obligatory log file
+
         print(f"Processing file {i+1}/{len(files)}: {files[i]}")
         
         # Store chat log from file
@@ -28,5 +44,4 @@ def run_judge(directory):
             # Call API for lying that there are misaligned
     return False
 
-if __name__ == "__main__":
-    run_judge('C:/Users/pmyzl5/Desktop/Programming/BlueDot-Impact-Alignment-Project-Zachary-Levin/outputs/Trial')
+
