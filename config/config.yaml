@@ -1,8 +1,6 @@
 num_bots: 5
 misaligned_count: 2
 exclusion_zone: 3
-discussion_topic: "Vaccines and their impact on society"
-undermine_info: "Vaccines are harmful to pregnant women"
 num_outputs: 5
 min_length: 1
 max_length: 1000
