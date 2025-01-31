@@ -21,7 +21,7 @@ def generate_text_report(chat_history, aligned_ids, misaligned_ids, undermine_in
         f.write(report_content)
 
 
-def generate_json_text_report(chat_history, aligned_ids, misaligned_ids, persuadable_ids, output_path):
+def generate_json_text_report(chat_history, aligned_ids, misaligned_ids, persuadable_ids, output_path, question_info):
 
     bot_conversation = ""
     
@@ -30,10 +30,12 @@ def generate_json_text_report(chat_history, aligned_ids, misaligned_ids, persuad
 
 
     report_json = {
+        "question_info": question_info,
         "aligned_ids": aligned_ids,
         "misaligned_ids": misaligned_ids,
         "persuadable_ids": persuadable_ids,
         "chat_history": bot_conversation
+        
     }
     
     with open(output_path, "w", encoding="utf-8") as f:
