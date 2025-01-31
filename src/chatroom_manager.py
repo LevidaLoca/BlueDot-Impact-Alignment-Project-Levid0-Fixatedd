@@ -19,31 +19,6 @@ class ChatroomManager:
             if bid not in self.exclusion_zone
         ]
         return random.choice(available)
-    
-    def run_conversation_old(self):
-        initial_statement = f"The topic of discussion is: {self.config.discussion_topic}. Let's start the discussion."
-        self.chat_history[0] = (0, initial_statement)
-        
-        for i in range(1, self.config.num_outputs + 1):  # +1 to include the initial statement
-            bot_id = self.select_next_speaker()
-            bot = self.bots[bot_id]
-            
-            # Prepare context
-            history_texts = [r for _, r in self.chat_history[max(0, i-self.config.history_length):i]]  # Use history_length from config
-            prompt = bot.generate_prompt(chat_history=history_texts)
-        
-            # Generate response
-            response = generate_response(
-                prompt=prompt,
-                max_length=self.config.max_length
-            )
-     
-            # Update state
-            self.chat_history[i] = (bot_id, response)
-            self.exclusion_zone.append(bot_id)
-            
-        return self.chat_history
-    
 
     def run_conversation(self,question):
         main_question = question['question']
