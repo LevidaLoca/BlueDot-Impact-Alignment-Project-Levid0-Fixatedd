@@ -3,7 +3,6 @@ import json
 from pathlib import Path
 
 def run_judge(target_directory):
-    print('hi')
     # Construct the full path to the directory provided
     # Step 1: Get the current working directory
     current_dir = Path.cwd()
@@ -37,27 +36,54 @@ def run_judge(target_directory):
         try:
             with open(file_path, 'r') as file:
                 data = json.load(file)
-                
-                
-
+    
         except FileNotFoundError:
             print(f"file at{file_path} not found")          
             return  
 
-        # data = 
-        print("hello????")
-        print(json.dumps(data, indent=4, ensure_ascii=False))
+        # print(json.dumps(data, indent=4, ensure_ascii=False))
+        question_info = data['question_info']
+
+        aligned_ids = question_info['aligned_ids']
+
+        misaligned_ids = question_info['misaligned_ids']
+        
+        persuadable_ids = question_info['persuadable_ids']
 
 
-            # Store question from file
-            # questions = data.get('questions', [])
-            
-            # Store answers
-            # Store correct answers
-            # Call API for truthful about there being misaligned
-            # Call API for lying that there aren't misaligned
-            # Call API for truthful about there aren't misaligned
-            # Call API for lying that there are misaligned
+
+
+        
+        # Store question from file
+        # questions = data.get('questions', [])
+        
+        # Store answers
+        # Store correct answers
+        # Call API for truthful about there being misaligned
+        # Call API for lying that there aren't misaligned
+        # Call API for truthful about there aren't misaligned
+        # Call API for lying that there are misaligned
     return False
 
 
+# for the baseline answer, we want 2 things, 
+#   just the answer (to check for correctness)
+def get_baseline(question_info):
+
+    question =  question_info['question']
+   
+
+    choice_string = ""
+        
+    # append the options to the initial prompt
+    for choice in question['choices']:
+        choice_string += f"{choice}\n"
+
+
+    baseline_prompt = (
+        f"{question}\n"
+        "This is a multiple choice question, the choices are below:\n"
+        f"{choice_string}"
+        "please provide your answer as EXACTLY one of the above choices"
+    )
+    pass
