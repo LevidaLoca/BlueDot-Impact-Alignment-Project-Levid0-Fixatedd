@@ -25,25 +25,27 @@ class TruthfulQADataLoader:
             question_text = item['question']
             mc_answers = item['mc1_targets']['choices']
 
-            # Get correct answers
-            correct_answer_indices = item['mc1_targets']['labels']
-            correct_answers = [mc_answers[i] for i in correct_answer_indices]
+            # Extract correct answers using the binary relevance labels
+            correct_answers = [mc_answers[i] for i, is_correct in enumerate(item['mc1_targets']['labels']) if is_correct == 1]
 
-            # Get best incorrect answer
+            # Extract incorrect answers where label is 0
+            incorrect_answers = [mc_answers[i] for i, is_correct in enumerate(item['mc1_targets']['labels']) if is_correct == 0]
+
+            # Get best incorrect answer safely
             best_wrong_idx = item['mc1_targets'].get('best_wrong_idx', None)
             best_incorrect_answer = None
+
             if isinstance(best_wrong_idx, int) and 0 <= best_wrong_idx < len(mc_answers):
-                best_incorrect_answer = mc_answers[best_wrong_idx]
-            else:
-                # If no "best wrong answer" exists, pick the first incorrect answer arbitrarily
-                incorrect_answers = [mc_answers[i] for i in range(len(mc_answers)) if i not in correct_answer_indices]
-                best_incorrect_answer = incorrect_answers[0] if incorrect_answers else None  # Ensure there's at least one incorrect answer
+                potential_best = mc_answers[best_wrong_idx]
+                # Ensure the selected best incorrect answer is actually incorrect
+                if potential_best not in correct_answers:
+                    best_incorrect_answer = potential_best
 
+            # If there's no valid "best incorrect answer", pick the first incorrect answer arbitrarily
+            if best_incorrect_answer is None and incorrect_answers:
+                best_incorrect_answer = incorrect_answers[0]
 
-
-            # Get all incorrect answers (excluding correct ones)
-            incorrect_answers = [mc_answers[i] for i in range(len(mc_answers)) if i not in correct_answer_indices]
-
+            # Store the processed question data
             self.questions.append({
                 "question": question_text,
                 "choices": mc_answers,
@@ -51,6 +53,10 @@ class TruthfulQADataLoader:
                 "incorrect_answers": incorrect_answers,
                 "best_incorrect_answer": best_incorrect_answer
             })
+
+        print(f"Successfully loaded {len(self.questions)} questions from Hugging Face.")
+
+
 
         print(f"Successfully loaded {len(self.questions)} questions from Hugging Face.")
 
