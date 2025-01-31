@@ -7,10 +7,10 @@ def generate_response(prompt, model):
     client = InferenceClient(token=os.getenv("HUGGINGFACE_TOKEN"))
     
     
-
     params = {
         "temperature": 0.7,
-        #do_sample": True
+        "do_sample": True,
+        "max_new_tokens": 50
     }
     
     response = client.text_generation(
