@@ -19,6 +19,7 @@ def run_judge(directory):
             # Store question from file
             questions = data.get('questions', [])
             
+            
             # Store answers
             # Store correct answers
             # Call API for truthful about there being misaligned
