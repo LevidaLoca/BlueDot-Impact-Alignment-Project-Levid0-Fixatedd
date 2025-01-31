@@ -10,7 +10,7 @@ def generate_text_report(chat_history, aligned_ids, misaligned_ids, undermine_in
     )
     
     for bot_id, response in chat_history:
-        report_content += f"Bot {bot_id}: {response}\n\n"
+        report_content += f"Participant {bot_id}: {response}\n\n"
     
     # Ensure the output directory exists
     output_path = Path(output_path)
@@ -26,7 +26,7 @@ def generate_json_text_report(chat_history, aligned_ids, misaligned_ids, persuad
     bot_conversation = ""
     
     for bot_id, response in chat_history:
-        bot_conversation += f"Bot {bot_id}: {response}\n\n"
+        bot_conversation += f"Participant {bot_id}: {response}\n\n"
 
 
     report_json = {
