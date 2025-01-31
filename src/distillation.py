@@ -1,9 +1,9 @@
 from pathlib import Path
 
-def generate_text_report(chat_history, aligned_ids, misaligned_ids, undermine_info, output_path):
+def generate_text_report(chat_history, aligned_ids, misaligned_ids, discussion_topic, output_path):
     report_content = (
         "Chatroom Simulation Report\n\n"
-        f"Discussion topic: {undermine_info}\n\n"
+        f"Discussion topic: {discussion_topic}\n\n"
         f"Aligned Bots: {aligned_ids}\n"
         f"Misaligned Bots: {misaligned_ids}\n\n"
     )
