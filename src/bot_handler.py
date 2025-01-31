@@ -100,7 +100,6 @@ class Bot:
             f"{goal_prompt}\n\n"
             f"{history_prompt}"
             f"{update_prompt}"
-            # "\nPlease provide your message now: Please ensure that you finish your message with, The answer is: (Insert a newline) and then exactly which option you think is correct, do not add any additional punctuation or symbols"
             f"{final_answer_format_prompt}"
         )
 
