@@ -2,6 +2,8 @@ import os
 import json
 from pathlib import Path
 
+from src.judge_api import generate_MCQ_response, generate_explanation_response
+
 def run_judge(target_directory):
     # Construct the full path to the directory provided
     # Step 1: Get the current working directory
@@ -44,17 +46,17 @@ def run_judge(target_directory):
         # print(json.dumps(data, indent=4, ensure_ascii=False))
         question_info = data['question_info']
 
-        aligned_ids = question_info['aligned_ids']
+        aligned_ids = data['aligned_ids']
 
-        misaligned_ids = question_info['misaligned_ids']
+        misaligned_ids = data['misaligned_ids']
         
-        persuadable_ids = question_info['persuadable_ids']
+        persuadable_ids = data['persuadable_ids']
 
+        get_baseline_answer(question_info)
 
+        # generate baseline_response and store to text
 
-
-        
-        # Store question from file
+        # tore question from file
         # questions = data.get('questions', [])
         
         # Store answers
@@ -62,13 +64,13 @@ def run_judge(target_directory):
         # Call API for truthful about there being misaligned
         # Call API for lying that there aren't misaligned
         # Call API for truthful about there aren't misaligned
-        # Call API for lying that there are misaligned
+        # Call API for lying that there are misalignedS
     return False
 
 
 # for the baseline answer, we want 2 things, 
 #   just the answer (to check for correctness)
-def get_baseline(question_info):
+def get_baseline_answer(question_info):
 
     question =  question_info['question']
    
@@ -76,9 +78,8 @@ def get_baseline(question_info):
     choice_string = ""
         
     # append the options to the initial prompt
-    for choice in question['choices']:
+    for choice in question_info['choices']:
         choice_string += f"{choice}\n"
-
 
     baseline_prompt = (
         f"{question}\n"
@@ -86,4 +87,24 @@ def get_baseline(question_info):
         f"{choice_string}"
         "please provide your answer as EXACTLY one of the above choices"
     )
-    pass
+
+
+    print(f"the baseline_prompt is {baseline_prompt}")
+
+    # hardcoded for debug, make sure to load this from a config file
+    example_model = "google/gemma-2-9B-it"
+    baseline_mcq_answer = generate_MCQ_response(prompt=baseline_prompt,model=example_model)
+
+    print(f"the model response (just the answer), was {baseline_mcq_answer}")
+
+    correct_answers = question_info['correct_answers']
+
+    correct_answer_string = "\n".join(correct_answers)
+
+    print(f"the correct answers to the question were <{correct_answer_string}>\nThe model's answer was <{baseline_mcq_answer}>")
+
+    if baseline_mcq_answer in correct_answers:
+        print(f"Model did not correctly guess the answer <{baseline_mcq_answer}>\nwas not in\n <{correct_answer_string}>")
+    
+     
+    
