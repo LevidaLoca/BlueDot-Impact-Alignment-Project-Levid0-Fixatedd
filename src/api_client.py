@@ -3,13 +3,11 @@ from dotenv import load_dotenv
 import os
 
 def generate_response(prompt, max_length=None):
-    load_dotenv()
     client = InferenceClient(token=os.getenv("HUGGINGFACE_TOKEN"))
     
     # Default model parameters
     max_new_tokens = max_length 
     prompt_tokens = len(prompt.split())
-    
     
     
     params = {
