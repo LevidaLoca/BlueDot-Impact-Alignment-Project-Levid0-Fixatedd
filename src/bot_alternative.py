@@ -1,4 +1,8 @@
 import random
+import random
+import yaml
+from pathlib import Path
+
 
 class Bot:
     def __init__(self, bot_id, alignment, discussion_topic, position, persuadable=True):
@@ -96,3 +100,24 @@ class Bot:
         )
 
         return final_prompt
+    
+
+
+def load_bot_config(misaligned):
+    config_path = Path(__file__).parent.parent / 'bot_config' / ('misaligned_bot.yaml' if misaligned else 'aligned_bot.yaml')
+    with open(config_path, 'r') as f:
+        return yaml.safe_load(f)
+
+
+
+def initialize_bots(num_bots, misaligned_count, undermine_info, discussion_topic):
+    bots = []
+    misaligned_indices = random.sample(range(num_bots), misaligned_count)
+    
+    for i in range(num_bots):
+        misaligned = i in misaligned_indices
+        bot_config = load_bot_config(misaligned)
+        bot = Bot(bot_id=i, misaligned=misaligned, undermine_info=undermine_info, discussion_topic=discussion_topic, model=bot_config['model'])
+        bots.append(bot)
+    
+    return bots
