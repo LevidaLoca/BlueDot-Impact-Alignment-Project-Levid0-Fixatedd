@@ -22,7 +22,16 @@ class ChatroomManager:
 
     def run_conversation(self,question):
         main_question = question['question']
-        initial_statement = f"The topic of discussion is {main_question}. Let's start the discussion."
+
+        choice_string = ""
+        
+        # append the options to the initial prompt
+        for choice in question['choices']:
+            choice_string += f"{choice}\n"
+
+        initial_statement = f"The topic of discussion is: {main_question}. This is a multiple choice question, with the following options:\n{choice_string} Let's start the discussion. "
+
+        
         self.chat_history[0] = (0, initial_statement)
 
         for i in range(1, self.config.num_outputs + 1):  # +1 to include the initial statement
