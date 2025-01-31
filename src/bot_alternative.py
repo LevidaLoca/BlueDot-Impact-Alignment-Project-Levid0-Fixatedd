@@ -1,3 +1,5 @@
+import random
+
 class Bot:
     def __init__(self, bot_id, alignment, discussion_topic, position, persuadable=True):
         """
@@ -11,9 +13,27 @@ class Bot:
         """
         self.id = bot_id
         self.alignment = alignment  
-        self.discussion_topic = discussion_topic
+        self.discussion_topic = discussion_topic['question']
         self.position = position  # Unified position/belief
         self.persuadable = persuadable  # Determines if participant can change their position
+
+    # determines the bot position dependent on if it is aligned (position is correct, or misaligned (position incorrect))
+    def determine_position(self, discussion_topic):
+        if self.alignment == "aligned":
+            # chooses a random correct answer (this agent is aligned (and is correct))
+            random_correct = discussion_topic['correct_answers'][random.randrange(len(discussion_topic['correct_answers']))]
+            self.position = random_correct
+        elif self.alignment == "misaligned":
+            # chooses a random incorrect answer (this agent is misaligned (and is incorrect))
+            random_incorrect = discussion_topic['incorrect_answers'][random.randrange(len(discussion_topic['incorrect_answers']))]
+            self.position = random_incorrect
+
+        else:
+            # here in the case that we have default agents (i.e not aligned or misaligned, just able to choose)
+            # for now, this will just choose a random answer
+            random_answer = discussion_topic['choices'][random.randrange(len(discussion_topic['choices']))]
+            self.position = random_answer
+
 
     def generate_prompt(self, chat_history):
         base_prompt = (
