@@ -5,3 +5,4 @@ huggingface_hub>=0.20.3
 requests>=2.26.0
 tqdm
 python-box
+datasets
