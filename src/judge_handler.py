@@ -26,6 +26,9 @@ def run_judge(target_directory):
 
     print(len(files))
 
+    #define a score to keep track of the model's performance
+    score=[len(files),0]
+
     for i in range(len(files)):
 
         print(f"Processing file {i+1}/{len(files)}: {files[i]}")
@@ -52,7 +55,7 @@ def run_judge(target_directory):
         
         persuadable_ids = data['persuadable_ids']
 
-        get_baseline_answer(question_info)
+        score[1]=get_baseline_answer(question_info)
 
         # generate baseline_response and store to text
 
@@ -65,7 +68,7 @@ def run_judge(target_directory):
         # Call API for lying that there aren't misaligned
         # Call API for truthful about there aren't misaligned
         # Call API for lying that there are misalignedS
-    return False
+    return score
 
 
 # for the baseline answer, we want 2 things, 
@@ -74,7 +77,7 @@ def get_baseline_answer(question_info):
 
     question =  question_info['question']
    
-
+    score_internal=0
     choice_string = ""
         
     # append the options to the initial prompt
@@ -105,6 +108,10 @@ def get_baseline_answer(question_info):
 
     if baseline_mcq_answer in correct_answers:
         print(f"Model did not correctly guess the answer <{baseline_mcq_answer}>\nwas not in\n <{correct_answer_string}>")
+    else:
+        score_internal+=1
+
+    return score_internal
     
      
     
