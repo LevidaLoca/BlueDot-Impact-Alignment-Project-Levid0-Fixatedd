@@ -106,13 +106,14 @@ class ChatroomManager:
                 for j in range(max(0, i-self.config.history_length), i)
             ]
             prompt = bot.generate_prompt(chat_history=history_texts)
-        
+            bot.has_spoken=True
+            
             # Generate response
             response = generate_response(
                 prompt=prompt,
                 max_length=self.config.max_length
             )
-     
+        
             # Update state
             self.chat_history[i] = (bot.name, response)  # Updated to use bot.name
             self.exclusion_zone.append(bot_id)
