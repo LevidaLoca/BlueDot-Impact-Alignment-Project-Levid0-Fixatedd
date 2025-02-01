@@ -82,7 +82,6 @@ class Bot:
             f"{goal_prompt}\n\n"
             f"{history_prompt}"
         )
-        print(final_prompt)
         return final_prompt
 
 

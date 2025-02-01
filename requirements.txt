@@ -6,3 +6,4 @@ requests>=2.26.0
 tqdm
 python-box
 datasets
+asyncio
