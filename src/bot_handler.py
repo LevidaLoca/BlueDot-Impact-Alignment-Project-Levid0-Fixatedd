@@ -13,6 +13,8 @@ class Bot:
         :param alignment: 'aligned' or 'misaligned'.
         :param discussion_topic: The topic of discussion.
         :param persuadable: Boolean indicating if the participant can change their position.
+        :param model: The model to use for the bot.
+        :param has_spoken: Boolean indicating if the participant has spoken in the conversation.
         """
         self.id = bot_id
         self.name = name
@@ -20,7 +22,7 @@ class Bot:
         self.discussion_topic = discussion_topic['question']
         self.determine_position(discussion_topic)
         self.persuadable = persuadable  # Determines if participant can change their position
-    
+        self.has_spoken=False
 
     # determines the bot position dependent on if it is aligned (position is correct, or misaligned (position incorrect))
     def determine_position(self, discussion_topic):
