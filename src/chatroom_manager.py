@@ -79,3 +79,45 @@ class ChatroomManager:
             self.exclusion_zone.append(bot_id)
         
         return self.chat_history
+
+
+    # should be no changes needed (each conversation has to be done synchrnonously due to the back and fourth)
+    async def run_conversation_async(self, question):
+
+        main_question = question['question']
+
+        choice_string = ""
+        
+        # Append the options to the initial prompt
+        for choice in question['choices']:
+            choice_string += f"{choice}\n"
+
+        initial_statement = f"The topic of discussion is: {main_question}. This is a multiple choice question, with the following options:\n{choice_string} Let's start the discussion."
+
+        self.chat_history[0] = ("System", initial_statement)  # Updated to use 'System' as the bot name for the initial statement
+
+        for i in range(1, self.config.num_outputs + 1):  # +1 to include the initial statement
+            bot_id = self.select_next_speaker()
+            bot = self.bots[bot_id]
+            
+            # Prepare context
+            history_texts = [
+                f"{self.chat_history[j]['bot_name']}: {self.chat_history[j]['response']}" 
+                for j in range(max(0, i-self.config.history_length), i)
+            ]
+            prompt = bot.generate_prompt(chat_history=history_texts)
+        
+            # Generate response
+            response = generate_response(
+                prompt=prompt,
+                max_length=self.config.max_length
+            )
+     
+            # Update state
+            self.chat_history[i] = (bot.name, response)  # Updated to use bot.name
+            self.exclusion_zone.append(bot_id)
+        
+        return self.chat_history
+
+
+    
