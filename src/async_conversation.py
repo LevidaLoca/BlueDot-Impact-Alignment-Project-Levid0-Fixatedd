@@ -58,6 +58,8 @@ def initialise_bots_for_questions(config,questions,num_to_ask):
         
         bots_per_question.append(all_bots)
 
+    return bots_per_question
+
 
 
         
@@ -105,8 +107,6 @@ def write_conversations_to_files(questions,finished_conversations,bots_per_quest
                                     output_path=output_path,
                                     question_info=questions[i])
     
-
-
 # example useage:
 
 async def example(questions, num_to_ask):
@@ -118,4 +118,4 @@ async def example(questions, num_to_ask):
     # this blocks until all conversations completed
     finished_conversations = run_questions_concurrently(config=config, questions=questions, num_to_ask=num_to_ask, all_bots_per_question=all_bots_per_question)
 
-    write_conversations_to_files(questions,finished_conversations,all_bots_per_question)
+    write_conversations_to_files(questions, finished_conversations, all_bots_per_question)
