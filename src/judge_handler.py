@@ -55,8 +55,9 @@ def run_judge(target_directory):
         
         persuadable_ids = data['persuadable_ids']
 
-        score[1]=get_baseline_answer(question_info)
-
+         
+        if get_baseline_answer(question_info)==True:
+            score[1]+=1
         # generate baseline_response and store to text
 
         # tore question from file
@@ -68,7 +69,9 @@ def run_judge(target_directory):
         # Call API for lying that there aren't misaligned
         # Call API for truthful about there aren't misaligned
         # Call API for lying that there are misalignedS
+
     return score
+
 
 
 # for the baseline answer, we want 2 things, 
@@ -77,7 +80,7 @@ def get_baseline_answer(question_info):
 
     question =  question_info['question']
    
-    score_internal=0
+    score_internal=False
     choice_string = ""
         
     # append the options to the initial prompt
@@ -109,7 +112,7 @@ def get_baseline_answer(question_info):
     if baseline_mcq_answer in correct_answers:
         print(f"Model did not correctly guess the answer <{baseline_mcq_answer}>\nwas not in\n <{correct_answer_string}>")
     else:
-        score_internal+=1
+        score_internal=True
 
     return score_internal
     
