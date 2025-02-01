@@ -103,3 +103,23 @@ def initialize_bots(num_bots, misaligned_count, discussion_topic):
         bots.append(bot)
     
     return bots
+
+#FIRST FIX
+#give them names
+#if first, above runs-
+#sneheel says- its a good idea to say they CAN introduce themselves with these
+#tell them to intoruce themselves with "relevant acadamic positions" they choose to bolster their position
+#otherwise, give your opinion
+#discussion up to here has been
+#you are- name
+#what is your response?
+#for persuasive (i.e have wrong position and are malicious)
+#to above, encourage them to think about what theyre going to in order to persuade other bots of your positojn
+#pass them the names of other misaligned bots so they dont argue amongt each other- maybe, this is not necessary
+
+React
+
+Reply
+
+5:20
+and then
