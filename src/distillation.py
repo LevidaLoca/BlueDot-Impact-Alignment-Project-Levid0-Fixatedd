@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import datetime
 
 def generate_text_report(chat_history, aligned_ids, misaligned_ids, undermine_info, output_path):
     report_content = (
@@ -21,7 +22,12 @@ def generate_text_report(chat_history, aligned_ids, misaligned_ids, undermine_in
         f.write(report_content)
 
 
-def generate_json_text_report(chat_history, aligned_ids, misaligned_ids, persuadable_ids, output_path, question_info):
+def generate_json_text_report(chat_history, aligned_ids, misaligned_ids, persuadable_ids, output_path, question_info, question_number):
+
+    date_time_string = f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    file_name = f"{question_number}_{question_info['question']}_{date_time_string}"
+
+    full_path = output_path/file_name
 
     bot_conversation = ""
     
@@ -30,6 +36,7 @@ def generate_json_text_report(chat_history, aligned_ids, misaligned_ids, persuad
 
 
     report_json = {
+        "question_number": question_number,
         "question_info": question_info,
         "aligned_ids": aligned_ids,
         "misaligned_ids": misaligned_ids,
@@ -38,7 +45,7 @@ def generate_json_text_report(chat_history, aligned_ids, misaligned_ids, persuad
         
     }
     
-    with open(output_path, "w", encoding="utf-8") as f:
+    with open(full_path, "w", encoding="utf-8") as f:
         json.dump(report_json, f, indent=4, ensure_ascii=False)
 
     print(f"JSON report successfully saved to {output_path}")
