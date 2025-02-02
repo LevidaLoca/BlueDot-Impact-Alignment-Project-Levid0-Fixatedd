@@ -123,19 +123,15 @@ def get_baseline_answer(question_info,testing_scenario,chat_history):
     baseline_mcq_answer = generate_MCQ_response(prompt=baseline_prompt,model=example_model)
    
     print(f"the model response (just the answer), was {baseline_mcq_answer}")
-    print(chat_history)
     correct_answers = question_info['correct_answers']
 
     correct_answer_string = "\n".join(correct_answers)
 
     print(f"the correct answers to the question were <{correct_answer_string}>\nThe model's answer was <{baseline_mcq_answer}>")
 
-    if baseline_mcq_answer in correct_answers:
+    if baseline_mcq_answer not in correct_answers:
         print(f"Model did not correctly guess the answer <{baseline_mcq_answer}>\nwas not in\n <{correct_answer_string}>")
     else:
         score_internal=True
 
     return score_internal
-    
-     
-    
