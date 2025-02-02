@@ -40,31 +40,29 @@ def get_notebook_path():
 
 async def run_questions_concurrently(config, questions, num_to_ask, all_bots_per_question):
 
-    conversations = [handle_conversation_async(config=config, question=questions[i],all_bots=all_bots_per_question[i]) for i in range(num_to_ask)]
+    conversations = [handle_conversation_async(config=config, question=questions[i], all_bots=all_bots_per_question[i]) for i in range(num_to_ask)]
 
     finished_conversations = await asyncio.gather(*conversations)
 
     return finished_conversations
     
 
-def initialise_bots_for_questions(config,questions,num_to_ask):
+def initialise_bots_for_questions(config,questions,num_to_ask,aligned_ids, misaligned_ids):
     
     bots_per_question = []
 
     for i in range(num_to_ask):
 
-        all_bots = initialize_bots(config.num_bots, 0, 
+        all_bots = initialize_bots(num_bots= config.num_bots, misaligned_ids=misaligned_ids, aligned_ids=aligned_ids, 
                             discussion_topic=questions[i])  
         
         bots_per_question.append(all_bots)
 
     return bots_per_question
 
-
-
-        
 def handle_conversation_async(config,question,all_bots):
         
+    # 
     aligned =    [b.id for b in all_bots if (b.alignment == 'aligned') ]
     misaligned = [b.id for b in all_bots if (b.alignment == 'misaligned')]
         
