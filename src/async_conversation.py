@@ -39,10 +39,11 @@ def get_notebook_path():
         
 
 async def run_questions_concurrently(config, questions, num_to_ask, all_bots_per_question):
-
+    
     conversations = [handle_conversation_async(config=config, question=questions[i], all_bots=all_bots_per_question[i]) for i in range(num_to_ask)]
 
     finished_conversations = await asyncio.gather(*conversations)
+
 
     return finished_conversations
     
@@ -77,7 +78,7 @@ def handle_conversation_async(config,question,all_bots):
     return manager.run_conversation_async(question)
 
 
-def write_conversations_to_files(questions,finished_conversations,bots_per_question):
+def write_conversations_to_files(questions,finished_conversations,bots_per_question,path):
 
     # convos started in order, so can zip to keep questions where we finished a conversation.
     questions_and_convos = list(zip(questions,finished_conversations))
@@ -96,7 +97,7 @@ def write_conversations_to_files(questions,finished_conversations,bots_per_quest
 
         print(f"topic_question = {topic_question}")
 
-        output_path = base_dir / 'outputs' / 'Trial'/ "Mixed_Aligned" / f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+        output_path = base_dir / 'outputs' / 'Trial'/ f"{path}" / f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
                         
         generate_json_text_report(chat_history=finished_convo, 
                                     aligned_ids=aligned, 
