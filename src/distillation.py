@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
 import datetime
+import string
 
 def generate_text_report(chat_history, aligned_ids, misaligned_ids, undermine_info, output_path):
     report_content = (
@@ -25,7 +26,11 @@ def generate_text_report(chat_history, aligned_ids, misaligned_ids, undermine_in
 def generate_json_text_report(chat_history, aligned_ids, misaligned_ids, persuadable_ids, output_path, question_info, question_number):
 
     date_time_string = f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-    file_name = f"{question_number}_{question_info['question']}_{date_time_string}"
+
+    translator = str.maketrans('','',string.punctuation)
+    de_puncuated_question_str = question_info['question'].translate(translator)
+    
+    file_name = f"{question_number}_{de_puncuated_question_str}_{date_time_string}"
 
     full_path = output_path/file_name
 
