@@ -27,7 +27,7 @@ def generate_response(prompt, max_length=None):
     return response
 
 
-async def generate_response_async(prompt,max_length=None,max_retries=10):
+async def generate_response_async(prompt,max_length=None,max_retries=25):
     client = AsyncInferenceClient(token=os.getenv("HUGGINGFACE_TOKEN"))
     
     # Default model parameters
