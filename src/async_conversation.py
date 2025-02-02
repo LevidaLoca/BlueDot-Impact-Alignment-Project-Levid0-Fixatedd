@@ -61,6 +61,44 @@ async def run_questions_concurrently(config, questions, num_to_ask, all_bots_per
 
     return finished_conversations
 
+# hacky fix, very bad practise but time pressure :(
+async def run_questions_concurrently_with_batch_saves(config, questions, num_to_ask, all_bots_per_question, path, batch_size=10):
+    
+    # inner function (Python magic!!!)
+    async def process_batch(start_idx, end_idx):
+        batch = [
+            handle_conversation_async(config=config, question=questions[i], all_bots=all_bots_per_question[i])
+            for i in range(start_idx, end_idx)
+        ]
+        return await asyncio.gather(*batch)
+
+    total_batches = (num_to_ask + batch_size - 1) // batch_size  # Calculate total batches
+    finished_conversations = []
+
+    for batch_num in range(total_batches):
+        start_idx = batch_num * batch_size
+        end_idx = min(start_idx + batch_size, num_to_ask)
+        
+        batch_results = await process_batch(start_idx, end_idx)
+
+        # will write to disk here
+        # print(f"handling batch {start_idx} to {end_idx}")
+        for i in range(start_idx,end_idx):
+            question = questions[i]
+            # I think this is write (Fixatedd)
+            finished_convo_in_batch = batch_results[i%batch_size]
+            bots_for_question = all_bots_per_question[i]
+
+            # print(f"writing question{i} to disk")
+            write_conversation_to_file(question=question,finished_conversation=finished_convo_in_batch,bots_for_question=bots_for_question,path=path, question_number=i)
+            # print(f"finished writing question{i} to disk")
+
+
+        finished_conversations.extend(batch_results)
+
+    return finished_conversations
+
+
 
 def initialise_bots_for_questions(config,questions,num_to_ask,aligned_ids, misaligned_ids):
     
@@ -122,6 +160,36 @@ def write_conversations_to_files(questions,finished_conversations,bots_per_quest
                                     question_number=i)
     
 # example useage:
+
+def write_conversation_to_file(question,finished_conversation,bots_for_question,path,question_number):
+
+    # convos started in order, so can zip to keep questions where we finished a conversation.
+
+    base_dir = get_notebook_path()
+
+    # Construct the output path
+    all_bots = bots_for_question
+
+    # a little scuffed...
+    aligned =    [b.id for b in all_bots if (b.alignment == 'aligned') ]
+    misaligned = [b.id for b in all_bots if (b.alignment == 'misaligned')]
+
+    topic_question = question['question']
+
+    print(f"topic_question = {topic_question}")
+
+    base_dir = get_notebook_path()
+    output_path = base_dir / 'outputs' / 'Trial'/ f"{path}" 
+                    
+    generate_json_text_report(chat_history=finished_conversation, 
+                                aligned_ids=aligned, 
+                                misaligned_ids=misaligned, 
+                                persuadable_ids=aligned,
+                                output_path=output_path,
+                                question_info=question,
+                                question_number=question_number)
+    
+
 
 async def example(questions, num_to_ask):
 
