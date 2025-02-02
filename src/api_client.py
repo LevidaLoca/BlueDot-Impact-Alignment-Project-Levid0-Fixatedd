@@ -53,8 +53,9 @@ async def generate_response_async(prompt,max_length=None,max_retries=10):
             )
             break
         except Exception as ex:
-            print(f"Failed to generate text: {ex}, on attempt {attempt}/{max_retries}")
             attempt += 1
+            if attempt == max_retries:
+                print(f"Failed to generate text: {ex}, on attempt {attempt}/{max_retries}")
             # Wait before retrying
             await asyncio.sleep(delay)  
             # Exponential backoff
