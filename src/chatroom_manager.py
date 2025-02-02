@@ -1,7 +1,7 @@
 import numpy as np
 import random
 from collections import deque
-from .api_client import generate_response
+from .api_client import generate_response, generate_response_async
 
 class ChatroomManager:
     def __init__(self, bots, config, aligned_ids, misaligned_ids):
@@ -109,7 +109,7 @@ class ChatroomManager:
             bot.has_spoken=True
             
             # Generate response
-            response = generate_response(
+            response = await generate_response_async(
                 prompt=prompt,
                 max_length=self.config.max_length
             )
