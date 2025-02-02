@@ -41,6 +41,9 @@ async def generate_response_async(prompt,max_length=None,max_retries=10):
     attempt = 0
     # 1s delay
     delay = 1
+    
+    # should throw an error
+    response = "RESPONSE FAILURE"
     while attempt < max_retries:
         try:
             response = await client.text_generation(
