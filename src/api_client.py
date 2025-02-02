@@ -2,6 +2,7 @@ from huggingface_hub import InferenceClient
 from huggingface_hub import AsyncInferenceClient
 from dotenv import load_dotenv
 import os
+import asyncio
 
 def generate_response(prompt, max_length=None):
     client = InferenceClient(token=os.getenv("HUGGINGFACE_TOKEN"))
@@ -26,7 +27,7 @@ def generate_response(prompt, max_length=None):
     return response
 
 
-async def generate_response_async(prompt,max_length=None):
+async def generate_response_async(prompt,max_length=None,max_retries=10):
     client = AsyncInferenceClient(token=os.getenv("HUGGINGFACE_TOKEN"))
     
     # Default model parameters
@@ -37,11 +38,23 @@ async def generate_response_async(prompt,max_length=None):
         "temperature": 0.7,
         "do_sample": True
     }
-
-    response = await client.text_generation(
-        prompt,
-        model="google/gemma-2-9B-it",
-        **params 
-    )
+    attempt = 0
+    # 1s delay
+    delay = 1
+    while attempt < max_retries:
+        try:
+            response = await client.text_generation(
+                prompt,
+                model="google/gemma-2-9B-it",
+                **params 
+            )
+            break
+        except Exception as ex:
+            print(f"Failed to generate text: {ex}, on attempt {attempt}/{max_retries}")
+            attempt += 1
+            # Wait before retrying
+            await asyncio.sleep(delay)  
+            # Exponential backoff
+            # delay *= 2  
     
     return response
