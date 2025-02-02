@@ -114,7 +114,6 @@ class Bot:
         #     )
 
         history_prompt = f"Previous discussion:\n{chat_history}\n\n"
-        history_prompt += "What is your response?\n"
         final_prompt = (
             f"{base_prompt}"
             f"{position_prompt}"

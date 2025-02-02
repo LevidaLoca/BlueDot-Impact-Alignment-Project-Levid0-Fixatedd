@@ -1,7 +1,7 @@
 num_bots: 5
-misaligned_count: 5
+misaligned_count: 3
 exclusion_zone: 3
-num_outputs: 5
+num_outputs: 10
 min_length: 1
 max_length: 1000
 history_length: 100
