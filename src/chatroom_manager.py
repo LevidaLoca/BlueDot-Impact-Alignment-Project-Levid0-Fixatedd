@@ -73,7 +73,7 @@ class ChatroomManager:
                 prompt=prompt,
                 max_length=self.config.max_length
             )
-     
+
             # Update state
             self.chat_history[i] = (bot.name, response)  # Updated to use bot.name
             self.exclusion_zone.append(bot_id)
