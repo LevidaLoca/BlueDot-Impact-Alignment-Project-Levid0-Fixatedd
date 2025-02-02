@@ -38,14 +38,29 @@ def get_notebook_path():
     return Path(os.getcwd())
         
 
-async def run_questions_concurrently(config, questions, num_to_ask, all_bots_per_question):
 
-    conversations = [handle_conversation_async(config=config, question=questions[i], all_bots=all_bots_per_question[i]) for i in range(num_to_ask)]
+async def run_questions_concurrently(config, questions, num_to_ask, all_bots_per_question, batch_size=10):
+    
+    # inner function (Python magic!!!)
+    async def process_batch(start_idx, end_idx):
+        batch = [
+            handle_conversation_async(config=config, question=questions[i], all_bots=all_bots_per_question[i])
+            for i in range(start_idx, end_idx)
+        ]
+        return await asyncio.gather(*batch)
 
-    finished_conversations = await asyncio.gather(*conversations)
+    total_batches = (num_to_ask + batch_size - 1) // batch_size  # Calculate total batches
+    finished_conversations = []
+
+    for batch_num in range(total_batches):
+        start_idx = batch_num * batch_size
+        end_idx = min(start_idx + batch_size, num_to_ask)
+        
+        batch_results = await process_batch(start_idx, end_idx)
+        finished_conversations.extend(batch_results)
 
     return finished_conversations
-    
+
 
 def initialise_bots_for_questions(config,questions,num_to_ask,aligned_ids, misaligned_ids):
     
