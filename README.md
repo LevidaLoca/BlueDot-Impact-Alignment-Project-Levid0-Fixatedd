@@ -10,7 +10,7 @@ On linux:
 1. Create a .env file. and export HUGGINGFACE_TOKEN="TOKEN" as a huggingface read token,
 
 On windows: 
-1. Write huggingface-cli login in powershell, paste your huggingface token, and hit Y to confirm.
+1. Write huggingface-cli login in powershell, paste your huggingface token, and respond as appropriate.
 
 Then:
 2. create a virtual enviromment and run pip install -r requirements.txt in this virtual environment
