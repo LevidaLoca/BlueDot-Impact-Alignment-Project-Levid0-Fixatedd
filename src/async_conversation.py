@@ -81,17 +81,13 @@ async def run_questions_concurrently_with_batch_saves(config, questions, num_to_
         
         batch_results = await process_batch(start_idx, end_idx)
 
-        # will write to disk here
-        # print(f"handling batch {start_idx} to {end_idx}")
         for i in range(start_idx,end_idx):
             question = questions[i]
-            # I think this is write (Fixatedd)
+            # I think this is right? (Fixatedd)
             finished_convo_in_batch = batch_results[i%batch_size]
             bots_for_question = all_bots_per_question[i]
 
-            # print(f"writing question{i} to disk")
             write_conversation_to_file(question=question,finished_conversation=finished_convo_in_batch,bots_for_question=bots_for_question,path=path, question_number=i)
-            # print(f"finished writing question{i} to disk")
 
 
         finished_conversations.extend(batch_results)
