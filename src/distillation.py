@@ -28,9 +28,7 @@ def generate_json_text_report(chat_history, aligned_ids, misaligned_ids, persuad
     date_time_string = f"{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
 
     translator = str.maketrans('','',string.punctuation)
-    de_puncuated_question_str = question_info['question'].translate(translator)
     
-    # file_name = f"{question_number}_{de_puncuated_question_str}_{date_time_string}"
     file_name = f"{question_number}_{date_time_string}"
 
 
