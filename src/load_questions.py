@@ -93,18 +93,3 @@ class TruthfulQADataLoader:
         except json.JSONDecodeError:
             print(f"Error: Invalid JSON format in '{filename}'.")
             return []
-
-# # Example usage
-# if __name__ == "__main__":
-#     loader = TruthfulQADataLoader()
-
-#     # Example: Load from a JSON file instead of downloading
-#     loaded_data = loader.load_from_json("truthful_qa_with_incorrect_answers.json")
-
-#     # Assign loaded data to the class instance
-#     loader.questions = loaded_data
-
-#     # Save to another JSON file (if needed)
-#     loader.save_to_json("backup_truthful_qa.json")
-
-#     # Print
