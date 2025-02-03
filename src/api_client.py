@@ -59,7 +59,6 @@ async def generate_response_async(prompt,max_length=None,max_retries=25):
             # Wait before retrying
             delay +=0.25  
             await asyncio.sleep(delay)  
-            # Exponential backoff
              
     
     return response
